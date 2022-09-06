@@ -1,0 +1,131 @@
+<div id="page" class="pagedark">
+  <div class="card">
+    <div class="header">
+      <h1>TODO</h1>
+      <a id="icon" (click)="ChangeTheme()"
+        ><img id="sun" src="../../assets/images/icon-sun.svg" alt="" />
+        <img
+          id="moon"
+          class="close"
+          src="../../assets/images/icon-moon.svg"
+          alt=""
+      /></a>
+    </div>
+    <div id="headOfList" class="head_dark">
+      <div class="circleOut"></div>
+      <input
+        id="ToDoInput"
+        type="text"
+        class="input_dark"
+        placeholder="Create a new todo..."
+        (keyup.enter)="onEnter()"
+        [(ngModel)]="InputedText"
+      />
+    </div>
+    <ul
+      id="ToDoList"
+      class="list list_dark"
+      (cdkDropListDropped)="drop($event)"
+      cdkDropList
+    >
+      <div *ngFor="let item of TDList" cdkDrag>
+        <li
+          *ngIf="selc === 'all'"
+          (mouseenter)="item.hover = true"
+          (mouseleave)="item.hover = false"
+        >
+          <div
+            class="{{ item.completed ? 'circleCompleted' : 'circleOut' }}"
+            #el
+            (mouseenter)="circleIn(el, item)"
+            (mouseleave)="circleOut(el, item)"
+            (click)="CompletedToDo(el, item, p)"
+          ></div>
+          <p #p class="{{ item.completed ? 'Pcompleted' : '' }}">
+            {{ item.text }}
+          </p>
+          <a
+            class=" {{ item.hover ? 'cross' : 'close' }}"
+            (click)="deleteItem(item)"
+          ></a>
+        </li>
+        <li
+          *ngIf="selc === 'active' ? !item.completed : false"
+          (mouseenter)="item.hover = true"
+          (mouseleave)="item.hover = false"
+        >
+          <div
+            class="{{ item.completed ? 'circleCompleted' : 'circleOut' }}"
+            #el
+            (mouseenter)="circleIn(el, item)"
+            (mouseleave)="circleOut(el, item)"
+            (click)="CompletedToDo(el, item, p)"
+          ></div>
+          <p #p class="{{ item.completed ? 'Pcompleted' : '' }}">
+            {{ item.text }}
+          </p>
+          <a
+            class=" {{ item.hover ? 'cross' : 'close' }}"
+            (click)="deleteItem(item)"
+          ></a>
+        </li>
+        <li
+          *ngIf="selc === 'completed' ? item.completed : false"
+          (mouseenter)="item.hover = true"
+          (mouseleave)="item.hover = false"
+        >
+          <div
+            class="{{ item.completed ? 'circleCompleted' : 'circleOut' }}"
+            #el
+            (mouseenter)="circleIn(el, item)"
+            (mouseleave)="circleOut(el, item)"
+            (click)="CompletedToDo(el, item, p)"
+          ></div>
+          <p #p class="{{ item.completed ? 'Pcompleted' : '' }}">
+            {{ item.text }}
+          </p>
+          <a
+            class=" {{ item.hover ? 'cross' : 'close' }}"
+            (click)="deleteItem(item)"
+          ></a>
+        </li>
+      </div>
+    </ul>
+
+    <div id="footone" class="foot1 foot_dark">
+      <div class="divnum">
+        <span class="p" id="number"> {{ NumberDisplayed }}</span>
+        <span class="p">&nbsp; items left</span>
+      </div>
+
+      <div class="movinfoot1">
+        <button id="all" (click)="All_ToDo()" class="Mp1 selectbut">
+          <span> All</span>
+        </button>
+        <button id="active" (click)="Active_ToDo()" class="Mp1">
+          <span> Active</span>
+        </button>
+        <button id="completed" (click)="Completed_ToDo()" class="Mp1">
+          <span> Completed</span>
+        </button>
+      </div>
+      <button id="clear" class="p" (click)="ClearCompleted()">
+        <span>Clear Completed</span>
+      </button>
+    </div>
+    <div id="foottwo" class="foot2 foot_dark">
+      <div class="movinfoot2">
+        <button id="all" (click)="All_ToDo()" class="Mp1 selectbut">
+          <span> All</span>
+        </button>
+        <button id="active" (click)="Active_ToDo()" class="Mp1">
+          <span> Active</span>
+        </button>
+        <button id="completed" (click)="Completed_ToDo()" class="Mp1">
+          <span> Completed</span>
+        </button>
+      </div>
+    </div>
+    <span id="dragdrop">Drag and drop to reorder list</span>
+  </div>
+</div>
